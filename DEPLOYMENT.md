@@ -12,7 +12,7 @@ It lists required environment variables and precise settings to make the reposit
 ## Required environment variables
 
 Backend (Render) — set these in the Render service Environment settings:
-- `MONGODB_URI` — MongoDB connection string for production. If empty, app will use an in-memory DB (dev only).
+- `MONGODB_URI` — MongoDB connection string for production. This value is required; the app will not start without it.
 - `JWT_SECRET` — strong secret for signing JWT tokens.
 - `FRONTEND_URL` — frontend base URL (e.g. https://your-site.vercel.app). Used for password reset links and CORS.
 - `PORT` — optional; Render provides `PORT` automatically.
