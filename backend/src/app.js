@@ -21,7 +21,11 @@ dotenv.config();
 const app = express();
 
 app.use(helmet());
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : '*',
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
