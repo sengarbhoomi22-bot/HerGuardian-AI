@@ -14,8 +14,8 @@
 | Developed By | Sakhi |
 | AI Framework | OpenAI Agents SDK |
 | Frontend | React + Vite + Tailwind CSS |
-| Backend | FastAPI (Python) |
-| Database | SQLite |
+| Backend | Node.js + Express |
+| Database | MongoDB (Mongo Atlas for production; mongodb-memory-server for local development) |
 | Deployment | Vercel + Render |
 
 ---
