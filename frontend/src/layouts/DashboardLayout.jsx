@@ -24,7 +24,9 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) console.warn('VITE_API_BASE_URL is not set. Notifications API calls will be skipped.');
 
 const navItems = [
   { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
@@ -67,7 +69,7 @@ function DashboardLayout() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!API_BASE_URL || !token) return;
 
     const load = async () => {
       try {

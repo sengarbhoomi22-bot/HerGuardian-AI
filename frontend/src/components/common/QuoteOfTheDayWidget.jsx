@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import { Heart, ExternalLink } from 'lucide-react';
 import { inspirationQuotes } from '../../data/inspirationQuotes';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) console.warn('VITE_API_BASE_URL is not set. Favorites API calls will be skipped.');
 
 const getQuoteForToday = () => {
   if (typeof window === 'undefined') return null;
@@ -35,23 +37,23 @@ const QuoteOfTheDayWidget = () => {
 
     const timer = window.setTimeout(() => {
       void (async () => {
-        try {
-          const token = localStorage.getItem('token');
-          if (!token) return;
+          try {
+            const token = localStorage.getItem('token');
+            if (!token || !API_BASE_URL) return;
 
-          const response = await fetch(`${API_BASE_URL}/favorites`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+            const response = await fetch(`${API_BASE_URL}/favorites`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
 
-          if (response.ok) {
-            const data = await response.json();
-            const favorites = data.data || [];
-            const favorited = favorites.some((fav) => fav.contentId === quote.id && fav.category === 'Quote');
-            setIsFavorited(favorited);
+            if (response.ok) {
+              const data = await response.json();
+              const favorites = data.data || [];
+              const favorited = favorites.some((fav) => fav.contentId === quote.id && fav.category === 'Quote');
+              setIsFavorited(favorited);
+            }
+          } catch (error) {
+            console.error('Error checking favorites:', error);
           }
-        } catch (error) {
-          console.error('Error checking favorites:', error);
-        }
       })();
     }, 0);
 

@@ -8,7 +8,9 @@ import { inspiringWomen } from '../../data/inspiringWomen';
 import { affirmations } from '../../data/affirmations';
 import { successStories } from '../../data/successStories';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) console.warn('VITE_API_BASE_URL is not set. Favorites API calls will be skipped.');
 
 const Inspiration = () => {
   // State
@@ -21,7 +23,7 @@ const Inspiration = () => {
   const loadFavorites = async () => {
     try {
       const token = localStorage.getItem('token');
-      if (!token) return;
+      if (!token || !API_BASE_URL) return;
 
       const response = await fetch(`${API_BASE_URL}/favorites`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -105,7 +107,7 @@ const Inspiration = () => {
       if (isFavorited(itemId, type)) {
         // Find favorite record by itemId and type to delete by _id
         const fav = favorites.find((f) => f.itemId === itemId && f.category === type);
-        if (fav) {
+        if (fav && API_BASE_URL) {
           await fetch(`${API_BASE_URL}/favorites/${fav._id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` },
@@ -113,18 +115,20 @@ const Inspiration = () => {
         }
       } else {
         // Add favorite (backend expects itemId and title)
-        await fetch(`${API_BASE_URL}/favorites`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            itemId: itemId,
-            category: type,
-            title,
-          }),
-        });
+        if (API_BASE_URL) {
+          await fetch(`${API_BASE_URL}/favorites`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              itemId: itemId,
+              category: type,
+              title,
+            }),
+          });
+        }
       }
 
       loadFavorites();

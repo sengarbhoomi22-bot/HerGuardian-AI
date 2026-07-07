@@ -3,7 +3,9 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 import NotificationCard from '../../components/notifications/NotificationCard';
 import { motion } from 'framer-motion';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) console.warn('VITE_API_BASE_URL is not set. Notifications API calls will be skipped.');
 
 const Notifications = () => {
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const Notifications = () => {
 
   const load = useCallback(async () => {
     setLoading(true);
-    if (!token) {
+    if (!token || !API_BASE_URL) {
       setLoading(false);
       return;
     }
@@ -39,7 +41,7 @@ const Notifications = () => {
   }, [load]);
 
   const markRead = async (id) => {
-    if (!token) return;
+    if (!token || !API_BASE_URL) return;
     try {
       await fetch(`${API_BASE_URL}/notifications/${id}/read`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
       setNotifications((s) => s.map(n => n._id === id ? { ...n, read: true } : n));
@@ -47,7 +49,7 @@ const Notifications = () => {
   };
 
   const remove = async (id) => {
-    if (!token) return;
+    if (!token || !API_BASE_URL) return;
     try {
       await fetch(`${API_BASE_URL}/notifications/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
       setNotifications((s) => s.filter(n => n._id !== id));
@@ -55,7 +57,7 @@ const Notifications = () => {
   };
 
   const markAll = async () => {
-    if (!token) return;
+    if (!token || !API_BASE_URL) return;
     try {
       const res = await fetch(`${API_BASE_URL}/notifications/read-all`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
