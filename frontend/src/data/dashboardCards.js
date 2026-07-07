@@ -1,0 +1,81 @@
+const dashboardCards = [
+  {
+    title: "Women's Health",
+    description: "AI-powered health guidance.",
+    icon: "🩺",
+    color: "bg-pink-100",
+    route: "/health",
+  },
+  {
+    title: "Menstrual Wellness",
+    description: "Track and understand your menstrual health.",
+    icon: "🌸",
+    color: "bg-rose-100",
+    route: "/menstrual",
+  },
+  {
+    title: "Nutrition",
+    description: "Healthy meals and diet recommendations.",
+    icon: "🍎",
+    color: "bg-green-100",
+    route: "/nutrition",
+  },
+  {
+    title: "Fitness",
+    description: "Workout plans for every lifestyle.",
+    icon: "💪",
+    color: "bg-blue-100",
+    route: "/fitness",
+  },
+  {
+    title: "Mental Wellness",
+    description: "Support your emotional well-being.",
+    icon: "🧠",
+    color: "bg-purple-100",
+    route: "/mental",
+  },
+  {
+    title: "Career & Scholarships",
+    description: "Career guidance and opportunities.",
+    icon: "🎓",
+    color: "bg-yellow-100",
+    route: "/career",
+  },
+  {
+    title: "Inspiration Hub",
+    description: "Stories, books and podcasts that empower.",
+    icon: "✨",
+    color: "bg-amber-100",
+    route: "/inspiration",
+  },
+  {
+    title: "Emergency SOS",
+    description: "Quick access to emergency contacts & resources.",
+    icon: "🚨",
+    color: "bg-red-100",
+    route: "/emergency",
+  },
+  {
+    title: "Health Reminder",
+    description: "Stay on track with your wellness routine.",
+    icon: "🔔",
+    color: "bg-cyan-100",
+    route: "/reminder",
+  },
+  {
+    title: "Saved Library",
+    description: "Your saved wellness tips and resources.",
+    icon: "🔖",
+    color: "bg-teal-100",
+    route: "/saved",
+  },
+  {
+    title: "Feedback & Reviews",
+    description: "Share your experience with the community.",
+    icon: "💬",
+    color: "bg-fuchsia-100",
+    route: "/feedback",
+  },
+];
+
+export default dashboardCards;
